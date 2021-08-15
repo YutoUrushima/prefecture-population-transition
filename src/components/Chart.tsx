@@ -8,14 +8,18 @@ const apiKey = process.env.REACT_APP_APIKEY ? process.env.REACT_APP_APIKEY : "";
 
 const Chart = () => {
   const getData = async () => {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: {
-        "X-API-KEY": apiKey
-      }
-    });
-    const json = await res.json();
-    return json;
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          "X-API-KEY": apiKey
+        }
+      });
+      const json = await res.json();
+      return json;
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   getData()
     .then((data) => {
