@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./App.module.scss";
-import Chart from "./Chart";
+import Chart from "./components/Chart";
 
 const App: React.FC = () => {
   return (
