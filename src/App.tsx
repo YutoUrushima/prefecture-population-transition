@@ -1,13 +1,13 @@
 import React from "react";
-import "./App.css";
+import styles from "./App.module.scss";
 import Chart from "./Chart";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className={styles.app}>
       <Chart />
     </div>
   );
-}
+};
 
 export default App;
