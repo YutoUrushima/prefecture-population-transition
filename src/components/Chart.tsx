@@ -1,5 +1,6 @@
 import { Line } from "react-chartjs-2";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const url =
   "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=31";
@@ -7,54 +8,63 @@ const url =
 const apiKey = process.env.REACT_APP_APIKEY ? process.env.REACT_APP_APIKEY : "";
 
 const Chart = () => {
-  const getData = async () => {
-    try {
-      const res = await fetch(url, {
-        method: "GET",
+  const [chartData, setChartData] = useState({});
+  const templateData = () => {
+    let empPopulation: number[] = [];
+    axios
+      .get(url, {
         headers: {
           "X-API-KEY": apiKey
         }
+      })
+      .then((res) => {
+        const fetchedData = res.data.result.data[0].data;
+        empPopulation.push(fetchedData[2].value);
+        empPopulation.push(fetchedData[4].value);
+        empPopulation.push(fetchedData[6].value);
+        empPopulation.push(fetchedData[8].value);
+        empPopulation.push(fetchedData[10].value);
+        empPopulation.push(fetchedData[12].value);
+        // console.log(empPopulation);
+        setChartData({
+          labels: ["1970", "1980", "1990", "2000", "2010", "2020"],
+          datasets: [
+            {
+              label: "population",
+              data: empPopulation,
+              backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+              borderColor: ["rgba(255, 99, 132, 1)"],
+              borderWidth: 2
+            }
+          ]
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
-      const json = await res.json();
-      return json;
-    } catch (error) {
-      console.log(error.message);
-    }
   };
-  getData()
-    .then((data) => {
-      console.log(JSON.stringify(data));
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  const data = {
-    labels: ["1970", "1980", "1990", "2000", "2010", "2020"],
-    datasets: [
-      {
-        label: "Population Transition",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: ["rgba(255, 99, 132, 1)"],
-        borderColor: ["rgba(255, 99, 132, 1)"],
-        borderWidth: 1
-      }
-    ]
-  };
-
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true
-          }
-        }
-      ]
-    }
-  };
+  useEffect(() => {
+    templateData();
+  }, []);
   return (
     <div>
-      <Line data={data} width={100} height={50} options={options} />
+      <Line
+        data={chartData}
+        options={{
+          responsive: true,
+          title: {
+            text: "THICKNESS SCALE",
+            display: true,
+            scales: {
+              yAxes: {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            }
+          }
+        }}
+      />
     </div>
   );
 };
