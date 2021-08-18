@@ -1,4 +1,8 @@
 .app {
   width: 30%;
   margin: 100px auto;
+  &_check {
+    display: flex;
+    align-items: center;
+  }
 }
