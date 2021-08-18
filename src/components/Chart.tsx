@@ -2,13 +2,15 @@ import { Line } from "react-chartjs-2";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const url =
-  "https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=31";
+interface props {
+  pref: number;
+}
 
 const apiKey = process.env.REACT_APP_APIKEY ? process.env.REACT_APP_APIKEY : "";
 
-const Chart = () => {
+const Chart: React.FC<props> = (props) => {
   const [chartData, setChartData] = useState({});
+  const url = `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${props.pref}`;
   const templateData = () => {
     let empPopulation: number[] = [];
     axios
@@ -45,7 +47,7 @@ const Chart = () => {
   };
   useEffect(() => {
     templateData();
-  }, []);
+  }, [props.pref]);
   return (
     <div>
       <Line
