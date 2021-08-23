@@ -4,8 +4,10 @@ import Chart from "./components/Chart";
 
 const App: React.FC = () => {
   const [pref, setPref] = useState<number>(0);
-  const handlePrefCheck = (number: number) => {
+  const [name, setName] = useState<string>("");
+  const handlePrefCheck = (number: number, name: string) => {
     setPref(number);
+    setName(name);
   };
   return (
     <div className={styles.app}>
@@ -15,7 +17,7 @@ const App: React.FC = () => {
           name="pref"
           value=""
           onChange={() => {
-            handlePrefCheck(1);
+            handlePrefCheck(1, "北海道");
           }}
         />
         <p>北海道</p>
@@ -26,7 +28,7 @@ const App: React.FC = () => {
           name="pref"
           value=""
           onChange={() => {
-            handlePrefCheck(2);
+            handlePrefCheck(2, "青森県");
           }}
         />
         <p>青森県</p>
@@ -37,12 +39,12 @@ const App: React.FC = () => {
           name="pref"
           value=""
           onChange={() => {
-            handlePrefCheck(3);
+            handlePrefCheck(3, "岩手県");
           }}
         />
         <p>岩手県</p>
       </label>
-      <Chart pref={pref} />
+      <Chart pref={pref} name={name} />
     </div>
   );
 };
