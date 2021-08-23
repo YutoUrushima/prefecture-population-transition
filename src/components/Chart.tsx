@@ -4,6 +4,7 @@ import axios from "axios";
 
 interface props {
   pref: number;
+  name: string;
 }
 
 const apiKey = process.env.REACT_APP_APIKEY ? process.env.REACT_APP_APIKEY : "";
@@ -32,12 +33,19 @@ const Chart: React.FC<props> = (props) => {
           labels: ["1970", "1980", "1990", "2000", "2010", "2020"],
           datasets: [
             {
-              label: "population",
+              label: props.name,
               data: empPopulation,
               backgroundColor: ["rgba(255, 99, 132, 0.2)"],
               borderColor: ["rgba(255, 99, 132, 1)"],
               borderWidth: 2
             }
+            // {
+            //   label: props.name,
+            //   data: [60000, 60001, 60002, 60003, 60004, 60005],
+            //   backgroundColor: ["blue"],
+            //   borderColor: ["blue"],
+            //   borderWidth: 2
+            // }
           ]
         });
       })
