@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./App.module.scss";
 import Chart from "./components/Chart";
 
@@ -200,6 +200,10 @@ const App: React.FC = () => {
     setPref(number);
     setName(name);
   };
+  useEffect(() => {
+    document.title = "Prefecture Population Transition";
+  }, []);
+
   return (
     <div className={styles.app}>
       <h1 className={styles.app_title}>Prefecture Population Transition</h1>
