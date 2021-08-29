@@ -1,8 +1,18 @@
 .app {
-  width: 30%;
-  margin: 100px auto;
+  width: 80%;
+  margin: 3rem auto;
+  &_title {
+    display: flex;
+    justify-content: center;
+  }
+  &_list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+  }
   &_check {
     display: flex;
     align-items: center;
+    margin-right: 2rem;
   }
 }
